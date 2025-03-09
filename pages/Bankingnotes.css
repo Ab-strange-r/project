@@ -1,0 +1,95 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #24243e, #302b63, #24243e);
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    animation: gradientAnimation 15s ease infinite;
+    background-size: 300% 300%;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+header {
+    background-color: #1f1b24;
+    color: #ff6f61;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+nav ul li a {
+    color: #ff6f61;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffcc66;
+}
+
+.notes-category {
+    text-align: center;
+    padding: 2rem;
+}
+
+.notes-category h2 {
+    color: #ff6f61;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.notes-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.notes-category ul li {
+    margin: 1rem 0;
+}
+
+.notes-category ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    background: linear-gradient(90deg, #ff6f61, #ffcc66);
+    padding: 1rem;
+    border-radius: 5px;
+    display: inline-block;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.notes-category ul li a:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #ffcc66, #ff6f61);
+}
+
+footer {
+    background-color: #1f1b24;
+    color: #ff6f61;
+    text-align: center;
+    padding: 1rem;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}

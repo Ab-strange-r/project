@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Note Management</title>
+    <link rel="stylesheet" href="upolad.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Panel - DT Note Management</h1>
+        <nav>
+            <a href="#">Dashboard</a>
+            <a href="#">Users</a>
+            <a href="#">Settings</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Manage Notes</h2>
+        <div id="buttonContainer">
+            <div class="button-group">
+                <input type="text" class="note-input" value="नेपाल राष्ट्रिय बैंक, नेपाल बैंक लिमिटेड etc notes" readonly>
+                <input type="file" class="pdf-input" accept="application/pdf">
+                <button class="upload-btn">Upload PDF</button>
+                <button class="edit-btn">✏️</button>
+                <button class="remove-btn">❌</button>
+            </div>
+            <div class="button-group">
+                <input type="text" class="note-input" value="ना. सु. खरिदार, सुब्बा etc notes" readonly>
+                <input type="file" class="pdf-input" accept="application/pdf">
+                <button class="upload-btn">Upload PDF</button>
+                <button class="edit-btn">✏️</button>
+                <button class="remove-btn">❌</button>
+            </div>
+        </div>
+        <button id="addButton">➕ Add More</button>
+    </div>
+
+    <script>
+        document.getElementById('addButton').addEventListener('click', function() {
+            const container = document.getElementById('buttonContainer');
+            const newGroup = document.createElement('div');
+            newGroup.classList.add('button-group');
+
+            const newInput = document.createElement('input');
+            newInput.type = "text";
+            newInput.classList.add('note-input');
+            newInput.value = "New Note Category";
+            newInput.readOnly = true;
+
+            const pdfInput = document.createElement('input');
+            pdfInput.type = "file";
+            pdfInput.classList.add('pdf-input');
+            pdfInput.accept = "application/pdf";
+
+            const uploadBtn = document.createElement('button');
+            uploadBtn.classList.add('upload-btn');
+            uploadBtn.textContent = "Upload PDF";
+
+            const editBtn = document.createElement('button');
+            editBtn.classList.add('edit-btn');
+            editBtn.textContent = "✏️";
+
+            const removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-btn');
+            removeBtn.textContent = "❌";
+
+            editBtn.addEventListener('click', function() {
+                if (newInput.readOnly) {
+                    newInput.readOnly = false;
+                    newInput.focus();
+                    editBtn.textContent = "✔️";
+                } else {
+                    newInput.readOnly = true;
+                    editBtn.textContent = "✏️";
+                }
+            });
+
+            removeBtn.addEventListener('click', function() {
+                newGroup.remove();
+            });
+
+            uploadBtn.addEventListener('click', function() {
+                const formData = new FormData();
+                formData.append('pdf', pdfInput.files[0]);
+                formData.append('noteCategory', newInput.value);
+
+                fetch('upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            newGroup.appendChild(newInput);
+            newGroup.appendChild(pdfInput);
+            newGroup.appendChild(uploadBtn);
+            newGroup.appendChild(editBtn);
+            newGroup.appendChild(removeBtn);
+            container.appendChild(newGroup);
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const inputField = button.previousElementSibling.previousElementSibling;
+                if (inputField.readOnly) {
+                    inputField.readOnly = false;
+                    inputField.focus();
+                    button.textContent = "✔️";
+                } else {
+                    inputField.readOnly = true;
+                    button.textContent = "✏️";
+                }
+            });
+        });
+
+        document.querySelectorAll('.remove-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                button.parentElement.remove();
+            });
+        });
+
+        document.querySelectorAll('.upload-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const pdfInput = button.previousElementSibling;
+                const noteInput = button.previousElementSibling.previousElementSibling;
+                const formData = new FormData();
+                formData.append('pdf', pdfInput.files[0]);
+                formData.append('noteCategory', noteInput.value);
+
+                fetch('upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
